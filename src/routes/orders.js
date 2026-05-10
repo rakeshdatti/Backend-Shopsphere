@@ -30,7 +30,7 @@ router.post("/",authMiddleware,async(req,res)=>{
         })
 
 
-        await OrderItem.bulkItem(
+        await OrderItem.bulkCreate(
             items.map(i => ({
                 orderId:   order.id,
                 productId: i.productId,
@@ -60,12 +60,16 @@ router.post("/",authMiddleware,async(req,res)=>{
 })
 
 
-router.get("/my-orders",authMiddleware,async(req,res)=>{
-    try{
-        const orders=await OrderSchema.find({user: req.user._id}).sort({createdAt: -1});
-        res.json(orders)
-    }catch(err){
-        res.status(500).json({message: err.message})
+router.get("/my-orders", authMiddleware, async (req, res) => {
+    try {
+        const orders = await Order.findAll({              // ← FIXED: was OrderSchema.find()
+            where:   { userId: req.user.id },             // ← FIXED: was req.user._id
+            include: [{ model: OrderItem }],
+            order:   [['createdAt', 'DESC']],
+        });
+        res.json(orders);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
-})
+});
 export default router;
