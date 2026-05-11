@@ -2,14 +2,14 @@ import express from 'express'
 import cors from "cors"
 import ConnectDB from "./config/connectDB.js"
 import dotenv from 'dotenv'
-import path from 'path'
-import { fileURLToPath } from "url";
+// import path from 'path'
+// import { fileURLToPath } from "url";
 
-dotenv.config()
+// dotenv.config()
 
-// Fix for __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename)
+// // Fix for __dirname in ES modules
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename)
 
 await ConnectDB()
 
@@ -45,15 +45,15 @@ app.use("/api/cart", cartRouter)
 app.use("/api/payments", PaymentRouter)
 
 
-// ---------- STATIC REACT BUILD SERVING ----------
-const frontendPath = path.join(__dirname, "dist")  
+// // ---------- STATIC REACT BUILD SERVING ----------
+// const frontendPath = path.join(__dirname, "dist")  
 
-app.use(express.static(frontendPath));
+// app.use(express.static(frontendPath));
 
-// Catch-all handler for SPA (React)
-app.use((req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
-});
+// // Catch-all handler for SPA (React)
+// app.use((req, res) => {
+//   res.sendFile(path.join(frontendPath, "index.html"));
+// });
 
 
 // ---------- START SERVER ----------
