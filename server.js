@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 // import path from 'path'
 // import { fileURLToPath } from "url";
 
-// dotenv.config()
+dotenv.config()
 
 // // Fix for __dirname in ES modules
 // const __filename = fileURLToPath(import.meta.url);
@@ -16,13 +16,8 @@ await ConnectDB()
 const app = express()
 
 app.use(cors({
-    origin: [
-        "http://localhost:5173",
-        process.env.FRONTEND_URL
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    origin: true,
+    credentials: true
 }));
 app.use(express.json())
 
